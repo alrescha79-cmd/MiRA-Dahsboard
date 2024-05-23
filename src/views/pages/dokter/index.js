@@ -1,22 +1,51 @@
-import React from 'react'
-import {
-    CCol,
-    CContainer,
-    CRow,
-  } from '@coreui/react'
+import React from 'react';
+import DataTableComponent from '../../../../src/components/DataTable';
 
-const dokter = () => {
+
+const columns = [
+    {
+        name: 'Nama Dokter',
+        selector: row => row.nama,
+    },
+    {
+        name: 'Spesialis',
+        selector: row => row.spesialis,
+    },
+    {
+        name: 'Action',
+        cell: row => (
+            <div>
+                <button className="btn btn-secondary text-white m-1">Cooming Soon</button>
+            </div>
+        ),
+    },
+];
+
+const data = [
+    {
+        id: 1,
+        nama: 'Dr. Ahmad',
+        spesialis: 'Dokter Radiologi',
+    },
+    {
+        id: 2,
+        nama: 'Dr. Ahmad',
+        spesialis: 'Dokter Radiologi',
+    },
+    {
+        id: 3,
+        nama: 'Dr. Ahmad',
+        spesialis: 'Dokter Radiologi',
+    }
+];
+
+const Jadwal = () => {
     return (
-        <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-            <CContainer>
-                <CRow className="justify-content-center">
-                    <CCol md="6">
-                        <h1>Halaman dokter</h1>
-                    </CCol>
-                </CRow>
-            </CContainer>
+        <div>
+            <button className="btn btn-success text-white m-2">Tambah Dokter</button>
+            <DataTableComponent columns={columns} data={data} />
         </div>
-    )
+    );
 }
 
-export default dokter
+export default Jadwal;

@@ -1,58 +1,78 @@
-import React from 'react'
-import {
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CButton,
-} from '@coreui/react'
+import React from 'react';
+import DataTableComponent from '../../../../src/components/DataTable';
 
-const pasien = () => {
-  return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row">
-      <CTable striped>
-        <CTableHead color="primary">
-          <CTableRow>
-            <CTableHeaderCell scope="col">Riwayat Pemeriksaan</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Nama Pasien</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Jenis Pemeriksaan</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Catatan</CTableHeaderCell>
-          </CTableRow>
-        </CTableHead>
-        <CTableBody>
-          <CTableRow>
-            <CTableHeaderCell scope="row">21/05/2024 08:00</CTableHeaderCell>
-            <CTableDataCell>Ahmad</CTableDataCell>
-            <CTableDataCell>CT-Scan</CTableDataCell>
-            <CTableDataCell>
-              <CButton color="success" style={{ marginRight: '10px' }}>Tambah Catatan</CButton>
-              <CButton color="primary">Hasil Pemeriksaan</CButton>
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">21/05/2024 08:00</CTableHeaderCell>
-            <CTableDataCell>Ahmad</CTableDataCell>
-            <CTableDataCell>CT-Scan</CTableDataCell>
-            <CTableDataCell>
-              <CButton color="success" style={{ marginRight: '10px' }}>Tambah Catatan</CButton>
-              <CButton color="primary">Hasil Pemeriksaan</CButton>
-            </CTableDataCell>
-          </CTableRow>
-          <CTableRow>
-            <CTableHeaderCell scope="row">21/05/2024 08:00</CTableHeaderCell>
-            <CTableDataCell>Ahmad</CTableDataCell>
-            <CTableDataCell>CT-Scan</CTableDataCell>
-            <CTableDataCell>
-              <CButton color="success" style={{ marginRight: '10px' }}>Tambah Catatan</CButton>
-              <CButton color="primary">Hasil Pemeriksaan</CButton>
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
-    </div>
-  )
+const getStatusBadge = (status) => {
+    let className;
+    switch (status) {
+        case 'Selesai':
+            className = "badge bg-success p-2 text";
+            break;
+        case 'Konfirmasi':
+            className = 'badge bg-primary p-2 text-white';
+            break;
+        case 'Jadwal Ulang':
+            className = 'badge bg-warning p-2 text-white';
+            break;
+        default:
+            className = 'badge bg-secondary ';
+    }
+    return <span className={className}>{status}</span>;
+};
+
+const columns = [
+    {
+        name: 'Waktu Kunjungan',
+        selector: row => row.waktu,
+    },
+    {
+        name: 'Nama Pasien',
+        selector: row => row.pasien,
+    },
+    {
+        name: 'Status',
+        cell: row => getStatusBadge(row.status),
+    },
+    {
+        name: 'Action',
+        cell: row => (
+            <div>
+                <button className="btn btn-secondary text-white m-1">Detail</button>
+                <button className="btn btn-success text-white m-1">Tambah Catatan</button>
+            </div>
+        ),
+    },
+];
+
+const data = [
+    {
+        id: 1,
+        nomorAntrian: 1,
+        pasien: 'Ahmad',
+        waktu: '21/05/2024 08:00',
+        status: 'Selesai',
+    },
+    {
+        id: 2,
+        nomorAntrian: 2,
+        pasien: 'Ahmad',
+        waktu: '21/05/2024 09:00',
+        status: 'Konfirmasi',
+    },
+    {
+        id: 3,
+        nomorAntrian: 3,
+        pasien: 'Ahmad',
+        waktu: '21/05/2024 09:30',
+        status: 'Jadwal Ulang',
+    },
+];
+
+const Jadwal = () => {
+    return (
+        <div>
+            <DataTableComponent columns={columns} data={data} />
+        </div>
+    );
 }
 
-export default pasien
+export default Jadwal;
