@@ -4,7 +4,6 @@ import {
   cilDescription,
   cilSpeedometer,
   cilStar,
-  cilCalculator,
   cilCalendar,
   cilWheelchair,
   cilUserFemale,

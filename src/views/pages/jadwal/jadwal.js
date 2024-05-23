@@ -1,28 +1,59 @@
 import React from 'react'
 import {
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
   CButton,
-  CCard,
-  CCol,
-  CContainer,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilMagnifyingGlass } from '@coreui/icons'
 
 const jadwal = () => {
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        {/* ini halaman untuk jadwal radiologi */}
-        <CRow className="justify-content-center">
-          <CCol md="6">
-            <h1>Jadwal Radiologi</h1>
-          </CCol>
-        </CRow>
-      </CContainer>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row">
+      <CTable striped>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">No. Antrian</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Nama Pasien</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Waktu</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Aksi</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          <CTableRow>
+            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+            <CTableDataCell>Ahmad</CTableDataCell>
+            <CTableDataCell>21/05/2024 08:00</CTableDataCell>
+            <CTableDataCell>
+              <CButton color="secondary" style={{ marginRight: '10px' }}>Lihat</CButton>
+              <CButton color="success" style={{ marginRight: '10px' }}>Konfirmasi</CButton>
+              <CButton color="danger">Jadwal Ulang</CButton>
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="row">2</CTableHeaderCell>
+            <CTableDataCell>Jacob</CTableDataCell>
+            <CTableDataCell>21/05/2024 11:00</CTableDataCell>
+            <CTableDataCell>
+              <CButton color="secondary" style={{ marginRight: '10px' }}>Lihat</CButton>
+              <CButton color="success" style={{ marginRight: '10px' }}>Konfirmasi</CButton>
+              <CButton color="danger">Jadwal Ulang</CButton>
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableHeaderCell scope="row">2</CTableHeaderCell>
+            <CTableDataCell>Jacob</CTableDataCell>
+            <CTableDataCell>21/05/2024 11:00</CTableDataCell>
+            <CTableDataCell>
+              <CButton color="secondary" style={{ marginRight: '10px' }}>Lihat</CButton>
+              <CButton color="success" style={{ marginRight: '10px' }}>Konfirmasi</CButton>
+              <CButton color="danger">Jadwal Ulang</CButton>
+            </CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+      </CTable>
     </div>
   )
 }
