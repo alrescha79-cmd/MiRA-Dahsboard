@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import DataTableComponent from '../../../../src/components/DataTable';
 
 const getStatusBadge = (status) => {
@@ -19,7 +20,7 @@ const getStatusBadge = (status) => {
     return <span className={className}>{status}</span>;
 };
 
-const columns = [
+const columns = (navigate) => [
     {
         name: 'Waktu Kunjungan',
         selector: row => row.waktu,
@@ -36,7 +37,7 @@ const columns = [
         name: 'Action',
         cell: row => (
             <div>
-                <button className="btn btn-secondary text-white m-1">Detail</button>
+                <button className="btn btn-secondary text-white m-1" onClick={() => navigate(`/detail-pasien/${row.id}`)}>Detail</button>
                 <button className="btn btn-success text-white m-1">Tambah Catatan</button>
             </div>
         ),
@@ -68,9 +69,10 @@ const data = [
 ];
 
 const Jadwal = () => {
+    const navigate = useNavigate();
     return (
         <div>
-            <DataTableComponent columns={columns} data={data} />
+            <DataTableComponent columns={columns(navigate)} data={data} />
         </div>
     );
 }

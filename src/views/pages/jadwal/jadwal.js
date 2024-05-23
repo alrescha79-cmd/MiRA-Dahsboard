@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import DataTableComponent from '../../../../src/components/DataTable';
 
-const columns = [
+const columns = (navigate) => [
   {
     name: 'No. Antrian',
     selector: row => row.nomorAntrian,
@@ -18,9 +19,9 @@ const columns = [
     name: 'Action',
     cell: row => (
       <div>
-        <button className="btn btn-secondary text-white m-1">Lihat</button>
-        <button className="btn btn-success text-white m-1">Konfirmasi</button>
-        <button className="btn btn-warning text-white m-1">Jadwal Ulang</button>
+        <button className="btn btn-secondary text-white m-1" onClick={() => navigate(`/detail-jadwal/${row.id}`)}>Lihat</button>
+        <button className="btn btn-success text-white m-1" onClick={() => navigate(`/konfirmasi-jadwal/${row.id}`)}>Konfirmasi</button>
+        <button className="btn btn-warning text-white m-1" onClick={() => navigate(`/jadwal-ulang/${row.id}`)}>Jadwal Ulang</button>
       </div>
     ),
   },
@@ -47,12 +48,14 @@ const data = [
   },
 ];
 
-const jadwal = () => {
+const Jadwal = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
-      <DataTableComponent columns={columns} data={data}/>
+      <DataTableComponent columns={columns(navigate)} data={data} />
     </div>
   );
 }
 
-export default jadwal;
+export default Jadwal;
