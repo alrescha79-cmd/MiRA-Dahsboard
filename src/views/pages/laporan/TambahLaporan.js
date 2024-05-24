@@ -28,7 +28,7 @@ const TambahLaporan = () => {
     return (
         <div>
             <h1>Tambah Laporan untuk Pasien ID: {id}</h1>
-            <div className="form-group">
+            <div className="form-group gap-2 d-flex flex-column">
                 <label htmlFor="exampleFormControlTextarea1">Catatan</label>
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 <label htmlFor="exampleFormControlTextarea1">Hasil Pemeriksaan</label>
