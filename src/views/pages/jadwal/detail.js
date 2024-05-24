@@ -34,6 +34,7 @@ const Detail = () => {
 
     return (
         <div>
+            <button onClick={() => navigate('/jadwal')} className="btn btn-primary my-2">Back to Jadwal</button>
             {selectedData ? (
                 <div>
                     <CCard>
@@ -51,7 +52,6 @@ const Detail = () => {
             ) : (
                 <p>No data found for this ID</p>
             )}
-            <button onClick={() => navigate('/jadwal')} className="btn btn-primary mt-2">Back to Jadwal</button>
         </div>
     );
 }

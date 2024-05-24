@@ -3,24 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DataTableComponent from '../../../../src/components/DataTable';
 import { collection, getDocs } from "firebase/firestore"; 
 import { db } from '../../../../src/config/firestore';
-
-const getStatusBadge = (status) => {
-    let className;
-    switch (status) {
-        case 'Selesai':
-            className = "badge bg-success p-2 text";
-            break;
-        case 'Konfirmasi':
-            className = 'badge bg-primary p-2 text-white';
-            break;
-        case 'Jadwal Ulang':
-            className = 'badge bg-warning p-2 text-white';
-            break;
-        default:
-            className = 'badge bg-secondary ';
-    }
-    return <span className={className}>{status}</span>;
-};
+import BadgeStatus from '../../../../src/components/BadgeStatus';
 
 const columns = (navigate) => [
     {
@@ -29,7 +12,7 @@ const columns = (navigate) => [
     },
     {
         name: 'Status',
-        cell: row => getStatusBadge(row.status),
+        cell: row => <BadgeStatus status={row.status} />,
     },
     {
         name: 'Action',
@@ -49,7 +32,15 @@ const Jadwal = () => {
     useEffect(() => {
         const fetchData = async () => {
             const dataCollection = await getDocs(collection(db, "pasien"));
-            setData(dataCollection.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+            const fetchedData = dataCollection.docs.map(doc => {
+                const docData = doc.data();
+                return {
+                    ...docData,
+                    id: doc.id,
+                    status: docData.status || 'Menunggu Konfirmasi',
+                };
+            });
+            setData(fetchedData);
         };
 
         fetchData();
