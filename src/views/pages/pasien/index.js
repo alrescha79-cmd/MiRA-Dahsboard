@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataTableComponent from '../../../../src/components/DataTable';
+import { collection, getDocs } from "firebase/firestore"; 
+import { db } from '../../../../src/config/firestore';
 
 const getStatusBadge = (status) => {
     let className;
@@ -22,12 +24,8 @@ const getStatusBadge = (status) => {
 
 const columns = (navigate) => [
     {
-        name: 'Waktu Kunjungan',
-        selector: row => row.waktu,
-    },
-    {
         name: 'Nama Pasien',
-        selector: row => row.pasien,
+        selector: row => row.nama_pasien,
     },
     {
         name: 'Status',
@@ -44,32 +42,19 @@ const columns = (navigate) => [
     },
 ];
 
-const data = [
-    {
-        id: 1,
-        nomorAntrian: 1,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 08:00',
-        status: 'Selesai',
-    },
-    {
-        id: 2,
-        nomorAntrian: 2,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 09:00',
-        status: 'Konfirmasi',
-    },
-    {
-        id: 3,
-        nomorAntrian: 3,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 09:30',
-        status: 'Jadwal Ulang',
-    },
-];
-
 const Jadwal = () => {
     const navigate = useNavigate();
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const dataCollection = await getDocs(collection(db, "pasien"));
+            setData(dataCollection.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div>
             <DataTableComponent columns={columns(navigate)} data={data} />

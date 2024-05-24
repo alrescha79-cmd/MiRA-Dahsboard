@@ -1,51 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../../../src/config/firestore';
 
-const data = [
-    {
-        id: 1,
-        nomorAntrian: 1,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 08:00',
-        status: 'Selesai',
-    },
-    {
-        id: 2,
-        nomorAntrian: 2,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 09:00',
-        status: 'Konfirmasi',
-    },
-    {
-        id: 3,
-        nomorAntrian: 3,
-        pasien: 'Ahmad',
-        waktu: '21/05/2024 09:30',
-        status: 'Jadwal Ulang',
-    },
-];
+import {
+    CCard,
+    CCardBody,
+    CCardHeader,
+    CCardText,
+    CCardTitle
+} from '@coreui/react';
+
 
 const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [selectedData, setSelectedData] = useState(null);
 
-    // Find the data based on the ID
-    const selectedData = data.find(item => item.id === parseInt(id));
+    useEffect(() => {
+        const fetchData = async () => {
+            const docRef = doc(db, "pasien", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setSelectedData({ ...docSnap.data(), id: docSnap.id });
+            } else {
+                console.log("No such document!");
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     return (
         <div>
-            <h1>Detail for ID: {id}</h1>
             {selectedData ? (
                 <div>
-                    <p>No. Antrian: {selectedData.nomorAntrian}</p>
-                    <p>Nama Pasien: {selectedData.pasien}</p>
-                    <p>Waktu Kunjungan: {selectedData.waktu}</p>
-                    <p>Status: {selectedData.status}</p>
+                    <CCard>
+                        <CCardHeader>{selectedData.nama_pasien}</CCardHeader>
+                        <CCardBody>
+                            <CCardTitle>Status: {selectedData.status}</CCardTitle>
+                            <CCardText>No. Antrian: {selectedData.nomor_antrian}</CCardText>
+                            <CCardText>Nama Pasien: {selectedData.nama_pasien}</CCardText>
+                            <CCardText>Alamat: {selectedData.alamat}</CCardText>
+                            <CCardText>Usia: {selectedData.usia}</CCardText>
+                            <CCardText>Jadwal Kunjungan: {selectedData.waktu.toDate().toString()}</CCardText>
+                        </CCardBody>
+                    </CCard>
                 </div>
             ) : (
                 <p>No data found for this ID</p>
             )}
-            <button onClick={() => navigate('/pasien')} className="btn btn-primary">Back to Pasien</button>
+            <button onClick={() => navigate('/pasien')} className="btn btn-primary mt-2">Back to Pasien</button>
         </div>
     );
 }
