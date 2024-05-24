@@ -38,7 +38,7 @@ const Detail = () => {
             {selectedData ? (
                 <div>
                     <CCard>
-                        <CCardHeader>{selectedData.nama_pasien}</CCardHeader>
+                        <CCardHeader>Detail Pasien</CCardHeader>
                         <CCardBody>
                             <CCardTitle>Status: {selectedData.status}</CCardTitle>
                             <CCardText>No. Antrian: {selectedData.nomor_antrian}</CCardText>
@@ -46,6 +46,12 @@ const Detail = () => {
                             <CCardText>Alamat: {selectedData.alamat}</CCardText>
                             <CCardText>Usia: {selectedData.usia}</CCardText>
                             <CCardText>Jadwal Kunjungan: {selectedData.waktu.toDate().toString()}</CCardText>
+                        </CCardBody>
+                    </CCard>
+                    <CCard className='mt-4'>
+                        <CCardHeader>Hasil Pemeriksaan Radiologi</CCardHeader>
+                        <CCardBody>
+                            <CCardTitle>Status: {selectedData.status}</CCardTitle>
                         </CCardBody>
                     </CCard>
                 </div>

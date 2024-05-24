@@ -8,7 +8,7 @@ import { showSuccessAlert, showDateInputAlert } from '../../../../src/utils/aler
 const confirmAppointment = async (id, reloadData) => {
     await updateDocument("pasien", id, { status: "Konfirmasi" });
     showSuccessAlert("Berhasil mengkonfirmasi jadwal!");
-    reloadData(); // Reload data after confirmation
+    reloadData();
 };
 
 const rescheduleAppointment = async (id, reloadData) => {
@@ -17,7 +17,7 @@ const rescheduleAppointment = async (id, reloadData) => {
         await updateDocument("pasien", id, { waktu: date });
         await updateDocument("pasien", id, { status: "Jadwal Ulang" });
         showSuccessAlert("Berhasil menjadwal ulang!");
-        reloadData(); // Reload data after rescheduling
+        reloadData();
     }
 };
 
