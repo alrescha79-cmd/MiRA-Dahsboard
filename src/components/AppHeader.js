@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useRef } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CContainer,
   CDropdown,
@@ -13,34 +13,47 @@ import {
   CNavLink,
   CNavItem,
   useColorModes,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+  CButton,
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 import {
   cilBell,
   cilContrast,
   cilEnvelopeOpen,
-  cilList,
   cilMenu,
   cilMoon,
   cilSun,
-} from '@coreui/icons'
+} from '@coreui/icons';
+import { getAuth, signOut } from 'firebase/auth';
+import { db } from '../config/firestore';
 
-import { AppBreadcrumb } from './index'
-import { AppHeaderDropdown } from './header/index'
+import { AppBreadcrumb } from './index';
+import { AppHeaderDropdown } from './header/index';
 
 const AppHeader = () => {
-  const headerRef = useRef()
-  const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
+  const headerRef = useRef();
+  const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme');
+  const dispatch = useDispatch();
+  const sidebarShow = useSelector((state) => state.sidebarShow);
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      alert('Apakah Anda yakin ingin keluar?');
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
       headerRef.current &&
-        headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0)
-    })
-  }, [])
+        headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
+    });
+  }, []);
 
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
@@ -64,11 +77,6 @@ const AppHeader = () => {
               <CIcon icon={cilBell} size="lg" />
             </CNavLink>
           </CNavItem>
-          {/* <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem> */}
           <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilEnvelopeOpen} size="lg" />
@@ -124,12 +132,15 @@ const AppHeader = () => {
           </li>
           <AppHeaderDropdown />
         </CHeaderNav>
+        <CButton color="primary" className="ms-2" onClick={handleLogout}>
+          Logout
+        </CButton>
       </CContainer>
       <CContainer className="px-4" fluid>
         <AppBreadcrumb />
       </CContainer>
     </CHeader>
-  )
-}
+  );
+};
 
-export default AppHeader
+export default AppHeader;
