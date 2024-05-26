@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useRef } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
   CDropdown,
@@ -14,46 +14,40 @@ import {
   CNavItem,
   useColorModes,
   CButton,
-} from '@coreui/react';
-import CIcon from '@coreui/icons-react';
-import {
-  cilBell,
-  cilContrast,
-  cilEnvelopeOpen,
-  cilMenu,
-  cilMoon,
-  cilSun,
-} from '@coreui/icons';
-import { getAuth, signOut } from 'firebase/auth';
-import { db } from '../config/firestore';
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilBell, cilContrast, cilEnvelopeOpen, cilMenu, cilMoon, cilSun } from '@coreui/icons'
+import { getAuth, signOut } from 'firebase/auth'
+import { db } from '../config/firestore'
+import { showErrorAlert } from '../utils/alertUtils'
 
-import { AppBreadcrumb } from './index';
-import { AppHeaderDropdown } from './header/index';
+import { AppBreadcrumb } from './index'
+import { AppHeaderDropdown } from './header/index'
 
 const AppHeader = () => {
-  const headerRef = useRef();
-  const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme');
-  const dispatch = useDispatch();
-  const sidebarShow = useSelector((state) => state.sidebarShow);
-  const navigate = useNavigate();
+  const headerRef = useRef()
+  const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
+  const dispatch = useDispatch()
+  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
-    const auth = getAuth();
+    const auth = getAuth()
     try {
-      await signOut(auth);
-      alert('Apakah Anda yakin ingin keluar?');
-      navigate('/login');
+      await signOut(auth)
+      alert('Apakah anda yakin ingin keluar?')
+      navigate('/login')
     } catch (error) {
-      console.error('Logout failed:', error);
+      showErrorAlert('Something went wrong!')
     }
-  };
+  }
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
       headerRef.current &&
-        headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
-    });
-  }, []);
+        headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0)
+    })
+  }, [])
 
   return (
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
@@ -140,7 +134,7 @@ const AppHeader = () => {
         <AppBreadcrumb />
       </CContainer>
     </CHeader>
-  );
-};
+  )
+}
 
-export default AppHeader;
+export default AppHeader

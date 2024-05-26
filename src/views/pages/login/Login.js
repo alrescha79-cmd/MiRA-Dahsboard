@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { db } from '../../../config/firestore';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import {
   CButton,
   CCard,
@@ -14,31 +13,34 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-} from '@coreui/react';
-import CIcon from '@coreui/icons-react';
-import { cilLockLocked, cilUser } from '@coreui/icons';
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilLockLocked, cilUser } from '@coreui/icons'
+import { showErrorAlert } from '../../../../src/utils/alertUtils'
 
 // Initialize Firebase auth
-const auth = getAuth();
+const auth = getAuth()
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     try {
-      // Sign in user with email and password
-      await signInWithEmailAndPassword(auth, email, password);
-      alert('Login successful');
-      navigate('/');
+      await signInWithEmailAndPassword(auth, email, password)
+      // showSuccessAlert('Login success!')
+      navigate('/')
     } catch (error) {
-      console.error('Login failed', error.message);
-      alert('Login failed');
-      // Handle login error
-      // You can display an error message to the user
+      showErrorAlert(
+        error.code === 'auth/user-not-found'
+          ? 'User not found!'
+          : error.code === 'auth/wrong-password'
+            ? 'Wrong password!'
+            : 'Something went wrong!',
+      )
     }
-  };
+  }
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -110,7 +112,7 @@ const Login = () => {
         </CRow>
       </CContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

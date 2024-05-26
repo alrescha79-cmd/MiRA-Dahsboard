@@ -11,7 +11,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  // extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
-  // plugins: ['react', 'react-hooks'],
-  // rules: {},
+  extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
+  plugins: ['react', 'react-hooks'],
+  rules: {},
 }

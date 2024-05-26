@@ -178,7 +178,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1 className='text-center my-3 fw-bold'>CONTOH HALAMAN DASHBOARD NANTINYA WKWKWKKWKW</h1>
+      <h1 className="text-center my-3 fw-bold">CONTOH HALAMAN DASHBOARD NANTINYA WKWKWKKWKW</h1>
       <WidgetsDropdown className="mb-4" />
       <CCard className="mb-4">
         <CCardBody>
