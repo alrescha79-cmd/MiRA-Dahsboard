@@ -19,10 +19,11 @@ import CIcon from '@coreui/icons-react'
 import { cilBell, cilContrast, cilEnvelopeOpen, cilMenu, cilMoon, cilSun } from '@coreui/icons'
 import { getAuth, signOut } from 'firebase/auth'
 import { db } from '../config/firestore'
-import { showErrorAlert } from '../utils/alertUtils'
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
+import Swal from 'sweetalert2'
+import { showErrorAlert } from '../utils/alertUtils'
 
 const AppHeader = () => {
   const headerRef = useRef()
@@ -34,11 +35,21 @@ const AppHeader = () => {
   const handleLogout = async () => {
     const auth = getAuth()
     try {
-      await signOut(auth)
-      alert('Apakah anda yakin ingin keluar?')
-      navigate('/login')
+      Swal.fire({
+        title: 'Logout',
+        text: 'Apakah Anda yakin ingin keluar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await signOut(auth)
+          navigate('/login')
+        }
+      })
     } catch (error) {
-      showErrorAlert('Something went wrong!')
+      showErrorAlert(error.message)
     }
   }
 

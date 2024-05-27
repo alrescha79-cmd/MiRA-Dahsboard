@@ -29,7 +29,7 @@ const routes = [
     element: Jadwal,
   },
   {
-    path: '/detail-jadwal/:id',
+    path: '/jadwal/:id',
     name: 'Jadwal Detail',
     element: JadwalDetail,
   },
@@ -39,7 +39,7 @@ const routes = [
     element: Pasien,
   },
   {
-    path: '/detail-pasien/:id',
+    path: '/pasien/:id',
     name: 'Pasien Detail',
     element: PasienDetail,
   },

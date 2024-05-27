@@ -16,7 +16,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-import { showErrorAlert } from '../../../../src/utils/alertUtils'
+import { showErrorAlert } from '../../../utils/alertUtils'
 
 // Initialize Firebase auth
 const auth = getAuth()
@@ -24,21 +24,20 @@ const auth = getAuth()
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false)
   const navigate = useNavigate()
 
   const handleLogin = async () => {
+    setHasAttemptedLogin(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      // showSuccessAlert('Login success!')
       navigate('/')
     } catch (error) {
-      showErrorAlert(
-        error.code === 'auth/user-not-found'
-          ? 'User not found!'
-          : error.code === 'auth/wrong-password'
-            ? 'Wrong password!'
-            : 'Something went wrong!',
-      )
+      if (hasAttemptedLogin) {
+        showErrorAlert(
+          'Login Gagal, silahkan cek kembali email dan password Anda. Pastikan email dan password yang Anda masukkan benar.',
+        )
+      }
     }
   }
 
@@ -78,7 +77,7 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={handleLogin}>
+                        <CButton color="primary" className="px-4 w-100" onClick={handleLogin}>
                           Login
                         </CButton>
                       </CCol>

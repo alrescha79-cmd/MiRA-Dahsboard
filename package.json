@@ -23,6 +23,7 @@
     "chart.js": "^4.4.2",
     "classnames": "^2.5.1",
     "core-js": "^3.36.1",
+    "date-fns": "^3.6.0",
     "firebase": "^10.12.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -35,7 +36,7 @@
     "redux": "5.0.1",
     "simplebar-react": "^3.2.4",
     "styled-components": "^6.1.11",
-    "sweetalert2": "^11.11.0",
+    "sweetalert2": "^11.6.13",
     "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {

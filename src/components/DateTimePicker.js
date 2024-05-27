@@ -29,7 +29,7 @@ const DateTimePicker = ({ selectedDate, setSelectedDate }) => {
         dateFormat="Pp"
         timeFormat="HH:mm"
         timeIntervals={15}
-        placeholderText="Select date and time"
+        placeholderText="Pilih tanggal dan waktu"
       />
     </DatePickerWrapper>
   )

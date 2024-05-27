@@ -20,7 +20,7 @@ const columns = (navigate) => [
       <div>
         <button
           className="btn btn-secondary text-white m-1"
-          onClick={() => navigate(`/detail-pasien/${row.id}`)}
+          onClick={() => navigate(`/pasien/${row.id}`)}
         >
           Detail
         </button>

@@ -15,13 +15,6 @@ export const showSuccessAlert = (message) => {
   })
 }
 
-Swal.fire({
-  icon: 'error',
-  title: 'Oops...',
-  text: 'Something went wrong!',
-  footer: '<a href="#">Why do I have this issue?</a>',
-})
-
 export const showErrorAlert = (message) => {
   Swal.fire({
     position: 'top-center',
@@ -38,8 +31,8 @@ export const showConfirmAlert = async (title, text) => {
     text,
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'No',
+    confirmButtonText: 'Ya',
+    cancelButtonText: 'Tidak',
   })
 
   return isConfirmed

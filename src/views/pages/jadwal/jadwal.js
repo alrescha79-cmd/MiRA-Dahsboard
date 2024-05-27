@@ -4,6 +4,8 @@ import DataTableComponent from '../../../../src/components/DataTable'
 import BadgeStatus from '../../../../src/components/BadgeStatus'
 import { fetchData, updateDocument } from '../../../../src/utils/firestoreUtils'
 import { showSuccessAlert, showDateInputAlert } from '../../../../src/utils/alertUtils'
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 const confirmAppointment = async (id, reloadData) => {
   await updateDocument('pasien', id, { status: 'Konfirmasi' })
@@ -32,7 +34,11 @@ const columns = (navigate, reloadData) => [
   },
   {
     name: 'Jadwal Kunjungan',
-    selector: (row) => row.waktu.toDate().toString(),
+    cell: (row) => (
+      <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
+        {format(row.waktu.toDate(), 'PPPPpppp', { locale: id })}
+      </div>
+    ),
   },
   {
     name: 'Status',
@@ -44,7 +50,7 @@ const columns = (navigate, reloadData) => [
       <div>
         <button
           className="btn btn-secondary text-white m-1"
-          onClick={() => navigate(`/detail-jadwal/${row.id}`)}
+          onClick={() => navigate(`/jadwal/${row.id}`)}
         >
           Detail
         </button>
