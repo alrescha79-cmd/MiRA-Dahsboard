@@ -1,5 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import {
   CButton,
   CCard,
@@ -15,13 +16,36 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { showErrorAlert } from '../../../utils/alertUtils'
+
+// Initialize Firebase auth
+const auth = getAuth()
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogin = async () => {
+    setHasAttemptedLogin(true)
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      navigate('/')
+    } catch (error) {
+      if (hasAttemptedLogin) {
+        showErrorAlert(
+          'Login Gagal, silahkan cek kembali email dan password Anda. Pastikan email dan password yang Anda masukkan benar.',
+        )
+      }
+    }
+  }
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
+          <CCol>
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
@@ -32,7 +56,12 @@ const Login = () => {
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        placeholder="your@email.com"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -42,11 +71,13 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="px-4 w-100" onClick={handleLogin}>
                           Login
                         </CButton>
                       </CCol>
@@ -62,14 +93,14 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>MiRa Admin Dashboard</h2>
                     <p>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
-                    <Link to="/register">
+                    <Link to="#">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        Subscribe Now!
                       </CButton>
                     </Link>
                   </div>
